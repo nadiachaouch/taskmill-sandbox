@@ -2,17 +2,11 @@
 @deploy
 */
 
-// Load the http module to create an http server.
-var http = require('http');
-
-// Configure our HTTP server to respond with Hello World to all requests.
-var server = http.createServer(function (request, response) {
-  response.writeHead(200, {"Content-Type": "text/plain"});
-  response.end("Hello World 2\n");
-});
-
-// Listen on port 8000, IP defaults to 127.0.0.1
-server.listen(8000);
-
-// Put a friendly message on the terminal
-console.log("Server running at http://127.0.0.1:8000/");
+var speak = require('simple-tts');
+ 
+// usage case 1 - writes the binary audio sample to the response stream (for returning it in an HTTP handler) 
+response.writeHead(200, {'Content-Type': 'audio/ogg'});
+speak('hello world', {format:'ogg', stream:response});
+ 
+// usage case 2 - creates the file /tmp/hello_world.mp3 in your OS (for caching or other purposes, the filename extension is automatically appended to the give filename) 
+speak('hello world', {format:'mp3', filename:'/tmp/hello_world'});
